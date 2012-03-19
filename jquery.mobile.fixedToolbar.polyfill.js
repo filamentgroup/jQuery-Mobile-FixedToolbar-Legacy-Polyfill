@@ -7,7 +7,7 @@
 (function( $, undefined ) {
 
 	// If the supportBlacklist is returning true, it's a blacklisted browser. 
-	if( $.mobile.fixedtoolbar.prototype.options.supportBlacklist() ){
+	if( $.mobile.fixedtoolbar.prototype.options.supportBlacklist() && $.support.scrollTop ){
 
 		// Keep a reference to the original _create method
 		var oldcreate = $.mobile.fixedtoolbar.prototype._create,
