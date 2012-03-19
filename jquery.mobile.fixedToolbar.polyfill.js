@@ -33,8 +33,10 @@
 							}
 							else {
 								return function(){
-									toolbar.css( "bottom", $.mobile.activePage.height() - $( window).scrollTop() - $.mobile.getScreenHeight() + "px" );
+									
+									toolbar.css( "bottom", page.outerHeight() - $( window).scrollTop() - $.mobile.getScreenHeight() + "px" );
 								}
+								
 							}
 						})();
 
