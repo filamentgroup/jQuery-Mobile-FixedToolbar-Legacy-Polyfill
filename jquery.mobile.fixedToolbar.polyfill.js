@@ -39,6 +39,8 @@
 								
 							}
 						})();
+						
+						$.mobile.fixedtoolbar.prototype.updatePosition = resetPos;
 
 						// Per page show, re-set up the event handling
 						page.bind( "pagebeforeshow", function( e ){
