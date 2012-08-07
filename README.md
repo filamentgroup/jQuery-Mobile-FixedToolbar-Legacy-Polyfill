@@ -14,4 +14,4 @@ Include `jquery.mobile.fixedToolbar.polyfill.css` and `jquery.mobile.fixedToolba
 
 This polyfill adds an `updatePosition` method to the `fixedtoolbar` plugin. If you add or remove content in the page, you can call this method to reset the toolbar's positioning. This is mostly applicable to footers.
 
-    $( ".ui-footer-fixed" ).fixedToolbar( "updatePosition" );
+    $( ".ui-footer-fixed" ).fixedtoolbar( "updatePosition" );
