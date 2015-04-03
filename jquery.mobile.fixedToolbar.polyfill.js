@@ -33,35 +33,47 @@
 							}
 							else {
 								return function(){
-									
+
 									toolbar.css( "bottom", page.outerHeight() - $( window).scrollTop() - $.mobile.getScreenHeight() + "px" );
 								}
 								
 							}
 						})();
 						
-						$.mobile.fixedtoolbar.prototype.updatePosition = resetPos;
+						this._updatePosition = resetPos;
+						$.mobile.fixedtoolbar.prototype.updatePosition = function(){
+							this._updatePosition();
+						};
 
 						// Per page show, re-set up the event handling
 						page.bind( "pagebeforeshow", function( e ){
-							var visible;
-
-							// Normalize proper object for scroll event
-							( ( $( document ).scrollTop() === 0 ) ? $( window ) : $( document ) )
-								.bind( "scrollstart.fixedtoolbarpolyfill", function(){
+							var visible,
+								onscrollstart = function(){
 									visible = toolbar.not( ".ui-fixed-hidden" ).fixedtoolbar( "hide", true );
-								})
-								.bind( "scrollstop.fixedtoolbarpolyfill", function(){
+								},
+								onscrollstop = function(){
 									resetPos();
 									visible.fixedtoolbar( "show" );
-								});
+								},
+								onthrottledresize = function(){
+									resetPos();
+								},
+								scrolltarget = ( $( document ).scrollTop() === 0 ) ? $( window ) : $( document );
+
+							// Normalize proper object for scroll event
+							scrolltarget
+								.bind( "scrollstart.fixedtoolbarpolyfill", onscrollstart)
+								.bind( "scrollstop.fixedtoolbarpolyfill", onscrollstop);
 
 							// on resize, reset positioning
-							$( window ).bind( "throttledresize.fixedtoolbarpolyfill", resetPos );
+							$( window ).bind( "throttledresize.fixedtoolbarpolyfill", onthrottledresize );
 
 							// on pagehide, unbind the event handlers
 							page.one( "pagehide", function(){
-								$( this ).add( this ).add( document ).unbind( ".fixedtoolbarpolyfill" );
+								scrolltarget
+									.unbind( "scrollstart.fixedtoolbarpolyfill", onscrollstart)
+									.unbind( "scrollstop.fixedtoolbarpolyfill", onscrollstop);
+								$( window ).unbind( "throttledresize.fixedtoolbarpolyfill", onthrottledresize );
 							});
 
 							// align for pageshow
