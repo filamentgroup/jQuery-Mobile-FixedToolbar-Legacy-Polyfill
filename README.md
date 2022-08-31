@@ -1,3 +1,5 @@
+:warning: This project is archived and the repository is no longer maintained.
+
 # jQuery Mobile Fixed Toolbar Legacy Polyfill 
 
 Brings support to browsers that don't natively support position:fixed (like iOS4)
